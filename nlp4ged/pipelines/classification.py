@@ -1,6 +1,6 @@
-from nlp4ged.support.extractor import DataSaver, gen_report
+from config import DATA_PATH, MODEL_PATH
 from sklearn.pipeline import Pipeline 
-from typing import Dict
+
 import pandas as pd
 from joblib import dump
 
@@ -19,8 +19,8 @@ index of the itteration with best overall performance will be printed.
 class Classifier:
     def __init__(self, params, grid_search=False, use_model=False):
         if use_model == False:
-            self.learning_data = '/Users/justin/Code/nlp4ged/_data/_learning/learning.xlsx'
-            self.blind_data = '/Users/justin/Code/nlp4ged/_data/_blind/blind.xlsx'
+            self.learning_data = DATA_PATH / '_learning' / 'learning.xlsx'
+            self.blind_data = DATA_PATH / '_blind' / 'blind.xlsx'
             if grid_search == True:
                 permutation_builder = PermutationBuilder()
                 generated_permutations = permutation_builder.build()
@@ -56,7 +56,7 @@ class Classifier:
 
             classification_pipeline.fit(X_train, y_train)
             if save_model == True:
-                    dump(classification_pipeline, 'classifier_model.joblib')
+                    dump(classification_pipeline, MODEL_PATH)
 
         y_pred = classification_pipeline.predict(X_blind)
         y_pred = pd.DataFrame(y_pred)

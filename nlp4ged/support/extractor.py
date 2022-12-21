@@ -1,5 +1,5 @@
 from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.feature_extraction.text import TfidfVectorizer
+from config import DATA_PATH
 import pandas as pd
 import numpy as np
 import os
@@ -65,7 +65,7 @@ class DataSaver:
         self.permutation_params = permutation_params
         self.step = step
         self.date = datetime.today().strftime('%Y-%m-%d')
-        self.root = '/Users/justin/Code/nlp4ged/_data/outputs/'
+        self.root = DATA_PATH / 'outputs'
         self.date_path = self.root + self.date + "-1/"
         self.path = self.date_path + self.step + "/"
         if not os.path.exists(self.path):

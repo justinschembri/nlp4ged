@@ -1,5 +1,4 @@
-import pandas as pd
-import os, sys, pathlib
+from config import DATA_PATH, MODEL_PATH
 from joblib import load
 from nlp4ged.regex.matchmaker import regex_importer, match_matricizer
 from nlp4ged.analysis.contamination import calculate_contamination
@@ -9,22 +8,16 @@ from nlp4ged.pipelines.classification import Classifier
 
 def process_data(data='selected'):
     # Point to dataset.
-    rootFolder = os.path.dirname(os.path.dirname(
-        str(pathlib.Path(sys.argv[0]).resolve())))
+
     if data == 'blind':
-        # folder = rootFolder + '/_data/_blind'
-        folder = '~/Code/nlp4ged/_data/_blind'
-        file = '/all.xlsx'
-        path = folder + file
+        path = DATA_PATH / '_blind' / 'all.xlsx'
 
     elif data == 'selected':
         # folder = rootFolder + '/_data/_selected'
-        folder = '~/Code/nlp4ged/_data/_selected'
-        file = '/selected.csv'
-        path = folder + file
+        path = DATA_PATH / '_selected' / 'selected.csv'
 
     # Load classifier model, classify, dump noise.
-    existing_classifier = load('/Users/justin/Code/nlp4ged/classifier_model.joblib')
+    existing_classifier = load(MODEL_PATH)
     classifier = Classifier(params=None, grid_search=False, use_model=True)
     noiseless_data = classifier.classify(use_model=True, 
                         existing_model=existing_classifier, 
@@ -44,5 +37,5 @@ def process_data(data='selected'):
 if __name__ == "__main__":
     conclusion_matrix = process_data(data='blind')
     conclusion_matrix['CFREF'] = conclusion_matrix['CFREF'].str.upper()
-    conclusion_matrix.to_csv('~/Code/nlp4ged/_data/outputs/all.csv')
+    save_path = DATA_PATH / 'outputs' / 'all.csv'
     print(conclusion_matrix)

@@ -3,7 +3,6 @@ from nlp4ged.pipelines.clustering_d2v import Clusterer
 from nlp4ged.support.extractor import DataSaver
 import matplotlib.pyplot as plt
 
-import pandas as pd
 # Classification and clustering parameters are currently fixed.
 classification_parameters = {
                         'vtype':'tfidf',

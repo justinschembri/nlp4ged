@@ -3,23 +3,6 @@ from nlp4ged.regex.matchmaker import regex_importer, match_matricizer
 import nlp4ged.support.text_processing as preprocess
 from nlp4ged.logic.second_pass import second_pass
 
-#Temporary lines for development:
-def temporary():
-    # rootFolder = os.path.dirname(os.path.dirname(
-    #     str(pathlib.Path(sys.argv[0]).resolve())))
-    # folder = rootFolder + '/_data/_selected'
-    # file = '/selected.csv'
-    folder = "~/Code/nlp4ged/_data/_selected"
-    file = '/selected.csv'
-    path = folder + file
-    data = pd.read_csv(path, header=0, index_col=0)
-    data = data.applymap(preprocess.lower_case())
-    regex_list = regex_importer()
-    match_matrix = match_matricizer(data, regex_list)
-    return match_matrix
-
-match_matrix = temporary()
-
 def logic_0(text, match_obj, cfref):
     # FIRST PASS LOGIC
     # If match (implicit), return YoC:
