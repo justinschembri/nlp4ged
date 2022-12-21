@@ -128,4 +128,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# OS stuff
+
+.DS_Store
+
+# Project specific
 data/
