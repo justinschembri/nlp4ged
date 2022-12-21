@@ -1,12 +1,10 @@
+from config import REGEX_FILE_PATH
 import numpy as np
 import re
 import csv
 
-# rootFolder = os.path.dirname(str(pathlib.Path(sys.argv[0]).resolve()))
-# path = rootFolder + '/regex/regex_list.csv'
-folder = "/Users/justin/Code/nlp4ged/nlp4ged/regex"
-file = '/regex_list.csv'
-path = folder + file
+
+path = REGEX_FILE_PATH.resolve()
 def regex_importer() -> list:
     """Import regex suite."""
     regex_list = {}
