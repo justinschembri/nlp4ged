@@ -1,0 +1,6 @@
+(?P<basement>basement.*)?construct(\s\w+){0,3}\s(house|dwelling)(?P<basement1>.*underlying garage|.*basement)?
+construction(\s\w+){0,5}\s(house|building|residence)(?!\soverlying)(?P<basement1>.*basement)?
+demolish(?P<basement1>.*basement)?(\s\w+){0,10}\s(residential)(?P<basement>.*basement)?
+(construct(ion)?)(?P<basement>.*basement)?(\s\w+){0,7}\s(houses|dwellings|flats|maisonettes|apartments)
+demolition(\s\w+){0,3}\s(house|residence|building|premises|property)(\s\w+){0,8}\s((re)?construct)(?P<basement>.*basement)?
+((?<=level)|(?<=floor))(\s\w+){0,5}\s(additional)
