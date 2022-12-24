@@ -3,7 +3,6 @@ import numpy as np
 import re
 import csv
 
-
 path = REGEX_FILE_PATH.resolve()
 def regex_importer() -> list:
     """Import regex suite."""

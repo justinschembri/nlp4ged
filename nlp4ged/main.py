@@ -1,13 +1,12 @@
 from config import DATA_PATH, MODEL_PATH
 from joblib import load
 from nlp4ged.regex.matchmaker import regex_importer, match_matricizer
-from nlp4ged.analysis.contamination import calculate_contamination
 from nlp4ged.support.text_processing import lower_case, remove_punctuation
 from nlp4ged.logic.conclusion_populater import populate_conclusions
 from nlp4ged.pipelines.classification import Classifier
 
 def process_data(data='selected'):
-    # Point to dataset.
+    # A wrapper to process the blind dataset using a pre-trained model.
 
     if data == 'blind':
         path = DATA_PATH / '_blind' / 'all.xlsx'
@@ -28,8 +27,6 @@ def process_data(data='selected'):
     noiseless_data['TEXT'] = noiseless_data['TEXT'].apply(remove_punctuation)
     regex_list = regex_importer()
     match_matrix = match_matricizer(noiseless_data, regex_list)
-    # Store contamination matrix.
-    #contamination_matrix = calculate_contamination(match_matrix, regex_list)
     # Run logic on matches, populate GED attributes columns.
     conclusion_matrix = populate_conclusions(match_matrix)
     return conclusion_matrix

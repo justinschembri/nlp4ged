@@ -1,5 +1,5 @@
 import pandas as pd
-import numpy as np
+from config import DATA_PATH
 from nlp4ged.regex.matchmaker import regex_importer, match_matricizer
 from nlp4ged.analysis.contamination import calculate_contamination
 from nlp4ged.support.text_processing import lower_case
@@ -10,9 +10,7 @@ regex patterns. Folder location is fixed through hardcoded declaration.
 """
 # Import selected classified and clustered data.
 
-folder = '/Users/justin/Code/nlp4ged/_data/_selected'
-file = '/selected.csv'
-path = folder + file
+path = DATA_PATH / '_selected' / 'selected.csv'
 
 data = pd.read_csv(path, header=0, index_col=0)
 data = data.applymap(lower_case())
