@@ -19,8 +19,9 @@ index of the itteration with best overall performance will be printed.
 class Classifier:
     def __init__(self, params, grid_search=False, use_model=False):
         if use_model == False:
-            self.learning_data = DATA_PATH / '_learning' / 'learning.xlsx'
-            self.blind_data = DATA_PATH / '_blind' / 'blind.xlsx'
+            #TODO: What is going on in these 2 lines exactly?
+            self.learning_data = DATA_PATH / 'input' / 'sample_1_classified.xlsx'
+            self.blind_data = DATA_PATH / 'input' / 'sample_2_unclassified.xlsx'
             if grid_search == True:
                 permutation_builder = PermutationBuilder()
                 generated_permutations = permutation_builder.build()
