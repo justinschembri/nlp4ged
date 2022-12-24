@@ -10,7 +10,7 @@ regex patterns. Folder location is fixed through hardcoded declaration.
 """
 # Import selected classified and clustered data.
 
-path = DATA_PATH / '_selected' / 'selected.csv'
+path = DATA_PATH / 'output' / 'sample_2_classified_and_clustered.xlsx'
 
 data = pd.read_csv(path, header=0, index_col=0)
 data = data.applymap(lower_case())

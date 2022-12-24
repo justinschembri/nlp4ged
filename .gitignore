@@ -131,6 +131,3 @@ dmypy.json
 # OS stuff
 
 .DS_Store
-
-# Project specific
-data/

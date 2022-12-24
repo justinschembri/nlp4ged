@@ -7,13 +7,13 @@ from nlp4ged.pipelines.classification import Classifier
 
 def process_data(data='selected'):
     # A wrapper to process the blind dataset using a pre-trained model.
-
+    # TODO: 'blind' should be 'all'.
     if data == 'blind':
-        path = DATA_PATH / '_blind' / 'all.xlsx'
+        path = DATA_PATH / 'input' / 'complete_unclassified.xlsx'
 
     elif data == 'selected':
         # folder = rootFolder + '/_data/_selected'
-        path = DATA_PATH / '_selected' / 'selected.csv'
+        path = DATA_PATH / 'output' / 'sample_2_classified_and_clustered.xlsx'
 
     # Load classifier model, classify, dump noise.
     existing_classifier = load(MODEL_PATH)
@@ -34,5 +34,6 @@ def process_data(data='selected'):
 if __name__ == "__main__":
     conclusion_matrix = process_data(data='blind')
     conclusion_matrix['CFREF'] = conclusion_matrix['CFREF'].str.upper()
+    # TODO: Save-path should be dated and generated.
     save_path = DATA_PATH / 'outputs' / 'all.csv'
     print(conclusion_matrix)
