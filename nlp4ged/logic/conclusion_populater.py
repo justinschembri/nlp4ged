@@ -3,7 +3,7 @@ from nlp4ged.logic.first_pass import first_pass_conclusions
 def populate_conclusions(match_matrix):
     conclusion_matrix = match_matrix.copy()
     # The GED attribute is appended to the match matrix.
-    attribute_list = ['CFREF', 'TEXT', 'CLUSTER', 'MATCHES', 'HEX', 'HEX+', 'BASEMENTS', 'YOC', 'CLASS']
+    attribute_list = ['cfref', 'text', 'CLUSTER', 'MATCHES', 'HEX', 'HEX+', 'BASEMENTS', 'YOC', 'CLASS']
     conclusion_matrix = conclusion_matrix.reindex(columns=attribute_list)
     conclusion_matrix['HEX'] = 0
     conclusion_matrix['HEX+'] = 0 
@@ -13,8 +13,8 @@ def populate_conclusions(match_matrix):
             continue
         for match in match_list:
             for match_key, match_obj in match.items():
-                text = conclusion_matrix.at[idx,"TEXT"]
-                cfref = conclusion_matrix.at[idx, "CFREF"]
+                text = conclusion_matrix.at[idx,"text"]
+                cfref = conclusion_matrix.at[idx, "cfref"]
                 conclusion_dict = first_pass_conclusions(match_key, match_obj, text, cfref)
                 for key in conclusion_dict:
                     if type(conclusion_matrix.at[idx, key]) == int:

@@ -1,5 +1,4 @@
 import pandas as pd
-from dataclasses import dataclass
 
 def calculate_contamination(match_matrix, regex_list) -> pd.DataFrame:
 

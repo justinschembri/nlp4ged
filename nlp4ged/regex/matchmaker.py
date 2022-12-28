@@ -27,7 +27,7 @@ def match_matricizer(data, regexes):
             return match
 
     for ref, pattern in regexes.items():
-        for idx, text in data['TEXT'].items():
+        for idx, text in data['text'].items():
             match = regex_match(text, pattern)
             if match != None:
                 data.at[idx,'MATCHES'].append({ref:match})

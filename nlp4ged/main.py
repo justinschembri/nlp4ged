@@ -13,7 +13,7 @@ def process_data(data='selected'):
 
     elif data == 'selected':
         # folder = rootFolder + '/_data/_selected'
-        path = DATA_PATH / 'output' / 'sample_2_classified_and_clustered.xlsx'
+        path = DATA_PATH / 'output' / 'sample_2_unclassified.xlsx'
 
     # Load classifier model, classify, dump noise.
     existing_classifier = load(MODEL_PATH)
@@ -24,7 +24,7 @@ def process_data(data='selected'):
 
     # Generate a match matrix, some preprocessing.
     noiseless_data = noiseless_data.applymap(lower_case())
-    noiseless_data['TEXT'] = noiseless_data['TEXT'].apply(remove_punctuation)
+    noiseless_data['text'] = noiseless_data['text'].apply(remove_punctuation)
     regex_list = regex_importer()
     match_matrix = match_matricizer(noiseless_data, regex_list)
     # Run logic on matches, populate GED attributes columns.
@@ -33,7 +33,7 @@ def process_data(data='selected'):
 
 if __name__ == "__main__":
     conclusion_matrix = process_data(data='blind')
-    conclusion_matrix['CFREF'] = conclusion_matrix['CFREF'].str.upper()
+    conclusion_matrix['cfref'] = conclusion_matrix['cfref'].str.upper()
     # TODO: Save-path should be dated and generated.
-    save_path = DATA_PATH / 'outputs' / 'all.csv'
+#    save_path = DATA_PATH / 'outputs' / 'all.csv'
     print(conclusion_matrix)
