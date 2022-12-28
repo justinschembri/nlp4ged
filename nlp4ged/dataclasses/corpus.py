@@ -45,7 +45,7 @@ class Corpus(pd.DataFrame):
         """Checking if imported excel is in correct format or not."""
         # Check correct filetype:
         if file_path.suffix not in ('.xlsx', '.xls'):
-            error = 'Incorrect filetype, expected .xlsx/xls'
+            error = 'Incorrect filetype, expected .xlsx/xls.'
             raise ValueError(error)
         df = pd.read_excel(file_path, header=0, sheet_name=None)
         # Handle multisheet files by concatinating:
