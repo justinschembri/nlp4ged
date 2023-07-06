@@ -76,6 +76,7 @@ target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+.ipynb
 
 # IPython
 profile_default/
@@ -127,3 +128,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# OS stuff
+
+.DS_Store
+
+# Devlogs
+devlog.md
+nlp4ged/pipelines/Untitled.ipynb
