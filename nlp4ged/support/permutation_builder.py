@@ -9,7 +9,8 @@ class PermutationBuilder:
         # Set up range of normalizer, vectorizer or model params:
         self.date_range_gaps = [3, 9]
         self.normalizer_model_types = ['basic', 'medium', 'high']
-        self.vectorizer_model_types = ['doc2vec', 'tfidf']
+        # self.vectorizer_model_types = ['doc2vec', 'tfidf']
+        self.vectorizer_model_types = ['doc2vec']        
         self.predictive_model_types = ['svc', 'randomforest'] # Naive Bayes disabled.
 
         # Set up individual vectorizer model params:
@@ -34,24 +35,24 @@ class PermutationBuilder:
 
     def date_perms(self):
         
-        date_range = range(5,23)
+        # date_range = range(5,23)
         ranges = []
-        for gap in self.date_range_gaps:
-            for count, date in enumerate(date_range):
-                if count == 0:
-                    start_date = date
-                    end_date = date + (gap-1)
-                    ranges.append([start_date, end_date])
-                else:
-                    start_date = end_date
-                    end_date = start_date + (gap-1)
-                    if end_date >= max(date_range):
-                        break
-                    else:
-                        ranges.append([start_date, end_date])
-            if max(max(ranges)) != max(date_range):
-                last_date = [max(max(ranges)), max(date_range)]
-                ranges.append(last_date)
+        # for gap in self.date_range_gaps:
+        #     for count, date in enumerate(date_range):
+        #         if count == 0:
+        #             start_date = date
+        #             end_date = date + (gap-1)
+        #             ranges.append([start_date, end_date])
+        #         else:
+        #             start_date = end_date
+        #             end_date = start_date + (gap-1)
+        #             if end_date >= max(date_range):
+        #                 break
+        #             else:
+        #                 ranges.append([start_date, end_date])
+        #     if max(max(ranges)) != max(date_range):
+        #         last_date = [max(max(ranges)), max(date_range)]
+        #         ranges.append(last_date)
         
         ranges.append(['all'])
         return ranges

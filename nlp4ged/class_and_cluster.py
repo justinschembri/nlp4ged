@@ -1,6 +1,7 @@
 from nlp4ged.pipelines.classification import Classifier
 from nlp4ged.pipelines.clustering_d2v import Clusterer
 from nlp4ged.support.extractor import DataSaver
+
 import matplotlib.pyplot as plt
 
 # Classification and clustering parameters are currently fixed.

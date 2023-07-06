@@ -16,12 +16,12 @@ n_clusters. Cluster text will be saved to ~/data/output and word clouds will be 
 class Clusterer():
     def __init__(self, classified_data, params):
         self.classified_data = classified_data
-        self.text = classified_data['TEXT']
+        self.text = classified_data['text']
         self.params = params
 
 
 # self.text = X_blind_noiseless['TEXT']
-    def cluster(self, k_inspect=False):
+    def cluster(self, k_inspect=False, return_X = False, n_clusters=25):
         normalizer = TextNormalizer(param_permutations=self.params)
         X_normalized = normalizer.fit_transform(self.text)
         vectorizer = TextVectorizer(param_permutations=self.params)
@@ -29,12 +29,13 @@ class Clusterer():
         X_vectorized = [d2v_model.infer_vector(x) for x in X_normalized]
 
 
-# 45 clusters appear ideal. 
-        n_clusters = 22
+# 22 clusters appear ideal. 
         cluster_model = KMeans(n_clusters=n_clusters)
         X_clusters = cluster_model.fit_predict(X_vectorized)
         X_clustered = pd.DataFrame(self.text)
         X_clustered['CLUSTER'] = X_clusters
+        if return_X == True:
+            return X_vectorized, X_clusters
         X_clustered = X_clustered.sort_values('CLUSTER')
         X_clustered_lower = X_clustered.applymap(lower_case())
         if k_inspect == False:
