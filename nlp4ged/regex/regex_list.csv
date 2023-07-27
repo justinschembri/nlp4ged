@@ -1,1 +1,3 @@
 (construct|construction)(?:\s\w+){0,3}\s(house|dwelling|terraced house|building|residence|residential unit)
+(demolish|demolition)(?:\s\w+){0,6}\s(residential development|units|rebuild|re construct|apartment)(?!\sfacade)
+(construct|construction|form)(\s\d\d)?(\s\w+){0,3}\s(basement garage|semi-basement garage|basement)

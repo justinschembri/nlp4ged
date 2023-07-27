@@ -5,6 +5,8 @@ import nlp4ged.support.text_processing as preprocess
 from nlp4ged.logic.second_pass import second_pass
 from nlp4ged.logic.second_pass import number_to_word
 
+RESIDENTIAL_KEYOWRDS = ['residential', 'apartments', 'flats']
+
 """
 A collection of functions for deriving conclusions from a corpus, post 
 de-noising.
@@ -22,12 +24,13 @@ def logic_pattern_0_1(text:str, match_obj: re.Match, cfref:str):
     #2nd pass
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
+    # BH = (\w+) plus penthouse scenario
     pattern = r'on (\w+) floors(?=.*and)(?=.*setback|.*penthouse|.*receded)'
     match = re.search(pattern, text)
     if match:
         building_height = number_to_word(match.group(1))
         conclusion_dict |= {"HEX":building_height+1}
-    
+    # BH = (\w+) scenario:
     pattern = r'on (\w+) floors(?!.*and)'
     match = re.search(pattern, text)
     if match:
@@ -35,58 +38,70 @@ def logic_pattern_0_1(text:str, match_obj: re.Match, cfref:str):
         conclusion_dict |= {"HEX":building_height}
     return conclusion_dict
 
-# def logic_1(text, match_obj, cfref):
-#     # FIRST PASS LOGIC
-#     # If match (implicity), return YoC:
-#     yoc = 2000 + int(cfref[-2:])
-#     conclusion_dict = {"YOC":yoc}
-#     #MATCH GROUP LOGIC
-#     for value in match_obj.groupdict().values():
-#         if value:
-#             conclusion_dict |= {"BASEMENTS":True}
-#     return conclusion_dict
+def logic_pattern_0_2(text:str, match_obj: re.Match, cfref:str):
+    #1st pass
+    yoc = 2000 + int(cfref[-2:])
+    conclusion_dict = {"YOC":yoc, "CLASS":"Residential", "PATTERN":2}
+    #2nd pass
+    if "basement" in text:
+        conclusion_dict |= {"BASEMENTS":True}
+    # BH = (\w+) plus penthouse scenario
+    patterns = [
+        r'(\w+)-storey(?=.*and)(?=.*setback|.*penthouse|.*receded)', 
+        r'(\w+) storey(?=.*and)(?=.*setback|.*penthouse|.*receded)', 
+        r'over (\w+) floors(?=.*and)(?=.*setback|.*penthouse|.*receded)'
+                ]
+    for pattern in patterns:
+        match = re.search(pattern, text)
+        if match:
+            building_height = number_to_word(match.group(1))
+            conclusion_dict |= {"HEX":building_height+1}
+    # BH = (\w+) scenario
+    patterns = [
+        r'(\w+)-storey(?!.*and)(?!.*setback|.*penthouse|.*receded)', 
+        r'(\w+) storey(?!.*and)(?!.*setback|.*penthouse|.*receded)', 
+        r'over (\w+) floors(?!.*and)(?!.*setback|.*penthouse|.*receded)'
+                ]
+    for pattern in patterns:
+        match = re.search(pattern, text)
+        if match:
+            building_height = number_to_word(match.group(1))
+            conclusion_dict |= {"HEX":building_height}
+    return conclusion_dict
 
-# def logic_2(text, match_obj, cfref):
-#     yoc = 2000 + int(cfref[-2:])
-#     conclusion_dict = {"YOC":yoc}
-#     #MATCH GROUP LOGIC
-#     for value in match_obj.groupdict().values():
-#         if value:
-#             conclusion_dict |= {"BASEMENTS":True}
-#     # SECOND PASS LOGIC
-#     conclusion_dict |= second_pass(text, regex=r"(\w+) overlying", count=True)
-#     return conclusion_dict
+def logic_pattern_0_3(text:str, match_obj: re.Match, cfref:str):
+    #1st pass
+    yoc = 2000 + int(cfref[-2:])
+    conclusion_dict = {"YOC":yoc, "CLASS":"Residential", "PATTERN":3}
+    #2nd pass
+    patterns = [
+        r'(\w+)-storey(?=.*and)(?=.*setback|.*penthouse|.*receded)', 
+        r'(\w+) storey(?=.*and)(?=.*setback|.*penthouse|.*receded)', 
+        r'over (\w+) floors(?=.*and)(?=.*setback|.*penthouse|.*receded)'
+                ]
+    for pattern in patterns:
+        match = re.search(pattern, text)
+        if match:
+            building_height = number_to_word(match.group(1))
+            conclusion_dict |= {"HEX":building_height+1}
+    # BH = (\w+) scenario
+    patterns = [
+        r'(\w+)-storey(?!.*and)(?!.*setback|.*penthouse|.*receded)', 
+        r'(\w+) storey(?!.*and)(?!.*setback|.*penthouse|.*receded)', 
+        r'over (\w+) floors(?!.*and)(?!.*setback|.*penthouse|.*receded)'
+                ]
+    for pattern in patterns:
+        match = re.search(pattern, text)
+        if match:
+            building_height = number_to_word(match.group(1))
+            conclusion_dict |= {"HEX":building_height}
+    return conclusion_dict
 
-# def logic_3(text, match_obj, cfref):
-#     yoc = 2000 + int(cfref[-2:])
-#     conclusion_dict = {"YOC":yoc, "CLASS":'Residential'}
-#     # MATCH GROUP LOGIC
-#     for value in match_obj.groupdict().values():
-#         if value:
-#             conclusion_dict |= {"BASEMENTS":True}
-#     # SECOND PASS LOGIC
-#     conclusion_dict |= second_pass(text, regex=r"over (\w+) floors", count=True)
-#     return conclusion_dict
-
-# def logic_4(text, match_obj, cfref):
-#     yoc = 2000 + int(cfref[-2:])
-#     conclusion_dict = {"YOC":yoc, "CLASS":'Residential'}
-#     # MATCH GROUP LOGIC
-#     for value in match_obj.groupdict().values():
-#         if value:
-#             conclusion_dict |= {"BASEMENTS":True}
-#     return conclusion_dict
-
-# def logic_5(text, match_obj, cfref):
-#     #MATCH GROUP LOGIC: Nil
-#     #SECOND PASS LOGIC
-#     conclusion_dict = {}
-#     conclusion_dict = second_pass(text, regex=r'(\w+)\s+floor(\s\w+){0,5}\s(\w+)\s(additional floor)',
-#                                   ordinal_then_strnum=True)
-#     return conclusion_dict
 
 def first_pass_conclusions(match_key, match_obj, text, cfref):
-    logic_map = {0: logic_pattern_0_1(text, match_obj, cfref)}
+    logic_map = {0: logic_pattern_0_1(text, match_obj, cfref),
+                 1: logic_pattern_0_2(text, match_obj, cfref),
+                 2: logic_pattern_0_3(text, match_obj, cfref)}
     return logic_map[match_key]
 
 
