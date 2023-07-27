@@ -6,3 +6,4 @@
 ^to construct(?=.*ground|.*basement)(\s\w+){0,2}\sgarage
 ^construct\w+(\s\w+){0,2}\s(garage|ground floor garage)(?=.*overlying)
 (additional)(\s\w+){0,0}\s(residential unit|floor|flat)
+construction(\s\w+){0,2}\s(ground floor garages)(?=.*residential dwelling)

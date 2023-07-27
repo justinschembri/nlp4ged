@@ -108,6 +108,17 @@ def logic_pattern_1_6(text:str, match_obj: re.Match, cfref:str):
     conclusion_dict |= occupancy_dict
     return conclusion_dict
 
+def logic_pattern_1_7(text:str, match_obj: re.Match, cfref:str):
+    # #1st pass
+    yoc = 2000 + int(cfref[-2:])
+    conclusion_dict = {"YOC":yoc, "PATTERN":9}
+    #2nd pass
+    hex_dict = building_height_count(text)
+    conclusion_dict |= hex_dict
+    occupancy_dict = occupancy_keyowrds(text)
+    conclusion_dict |= occupancy_dict
+    return conclusion_dict
+
 def first_pass_conclusions(match_key, match_obj, text, cfref):
     logic_map = {0: logic_pattern_0_1(text, match_obj, cfref),
                  1: logic_pattern_0_2(text, match_obj, cfref),
@@ -117,6 +128,7 @@ def first_pass_conclusions(match_key, match_obj, text, cfref):
                  5: logic_pattern_1_2(text, match_obj, cfref),
                  6: logic_pattern_1_4(text, match_obj, cfref),
                  7: logic_pattern_1_6(text, match_obj, cfref),
+                 8: logic_pattern_1_7(text, match_obj, cfref),
                  }
     return logic_map[match_key]
 
