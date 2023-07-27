@@ -148,6 +148,42 @@ def logic_pattern_1_11(text:str, match_obj: re.Match, cfref:str):
     conclusion_dict |= occupancy_dict
     return conclusion_dict
 
+def logic_pattern_1_12(text:str, match_obj: re.Match, cfref:str):
+    #1st pass
+    yor = 2000 + int(cfref[-2:])
+    conclusion_dict = {"YOR":yor, "PATTERN":13}
+    #2nd pass
+    occupancy_dict = occupancy_keyowrds(text)
+    conclusion_dict |= occupancy_dict
+    return conclusion_dict
+
+def logic_pattern_1_13(text:str, match_obj: re.Match, cfref:str):
+    #1st pass
+    yor = 2000 + int(cfref[-2:])
+    conclusion_dict = {"YOR":yor, "PATTERN":14}
+    #2nd pass
+    occupancy_dict = occupancy_keyowrds(text)
+    conclusion_dict |= occupancy_dict
+    return conclusion_dict
+
+def logic_pattern_1_14(text:str, match_obj: re.Match, cfref:str):
+    #1st pass
+    yor = 2000 + int(cfref[-2:])
+    conclusion_dict = {"YOR":yor, "PATTERN":15}
+    #2nd pass
+    occupancy_dict = occupancy_keyowrds(text)
+    conclusion_dict |= occupancy_dict
+    return conclusion_dict
+
+def logic_pattern_1_15(text:str, match_obj: re.Match, cfref:str):
+    #1st pass
+    yor = 2000 + int(cfref[-2:])
+    conclusion_dict = {"YOR":yor, "PATTERN":16}
+    #2nd pass
+    occupancy_dict = occupancy_keyowrds(text)
+    conclusion_dict |= occupancy_dict
+    return conclusion_dict
+
 def first_pass_conclusions(match_key, match_obj, text, cfref):
     logic_map = {0: logic_pattern_0_1(text, match_obj, cfref),
                  1: logic_pattern_0_2(text, match_obj, cfref),
@@ -161,6 +197,10 @@ def first_pass_conclusions(match_key, match_obj, text, cfref):
                  9: logic_pattern_1_9(text, match_obj, cfref),
                  10: logic_pattern_1_10(text, match_obj, cfref),
                  11: logic_pattern_1_11(text, match_obj, cfref),
+                 12: logic_pattern_1_12(text, match_obj, cfref),
+                 13: logic_pattern_1_13(text, match_obj, cfref),
+                 14: logic_pattern_1_14(text, match_obj, cfref),
+                 15: logic_pattern_1_15(text, match_obj, cfref),
                  }
     return logic_map[match_key]
 

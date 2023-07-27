@@ -15,5 +15,6 @@ conclusion_matrix = populate_conclusions(match_matrix)
 a = len(conclusion_matrix)
 b = len(conclusion_matrix[conclusion_matrix["PATTERN"] > 0])
 b/a
-x = conclusion_matrix[conclusion_matrix["PATTERN"] == 11]
+x = conclusion_matrix[conclusion_matrix["PATTERN"] == 16]
+len(x)
 conclusion_matrix
