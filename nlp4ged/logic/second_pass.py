@@ -123,7 +123,8 @@ def occupancy_keyowrds(text:str) -> dict:
     occupancy type of a given permit. Returns a dict object which can be added
     to the conclusion dict.
     """
-    residential_keywords = ['flat', 'apartment', 'residence', 'house']
+    residential_keywords = ['flat', 'apartment', 'residence', 'house', 
+                            'maisonette']
     commercial_keyowrds = ['shop', 'office']
     for keyword in residential_keywords:
         occupancy_dict = {"OCCUPANCY":[]}
