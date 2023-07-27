@@ -2,7 +2,7 @@ import pandas as pd
 import re
 from nlp4ged.regex.matchmaker import regex_importer, match_matricizer
 import nlp4ged.support.text_processing as preprocess
-from nlp4ged.logic.second_pass import number_to_word, building_height_count
+from nlp4ged.logic.second_pass import number_to_word, building_height_count, occupancy_keyowrds
 
 RESIDENTIAL_KEYOWRDS = ['residential', 'apartments', 'flats']
 
@@ -19,43 +19,51 @@ ARGS:
 def logic_pattern_0_1(text:str, match_obj: re.Match, cfref:str):
     #1st pass
     yoc = 2000 + int(cfref[-2:])
-    conclusion_dict = {"YOC":yoc, "CLASS":"Residential", "PATTERN":1}
+    conclusion_dict = {"YOC":yoc, "PATTERN":1}
     #2nd pass
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
     hex_dict = building_height_count(text)
     conclusion_dict |= hex_dict
+    occupancy_dict = occupancy_keyowrds(text)
+    conclusion_dict |= occupancy_dict
     return conclusion_dict
 
 def logic_pattern_0_2(text:str, match_obj: re.Match, cfref:str):
     #1st pass
     yoc = 2000 + int(cfref[-2:])
-    conclusion_dict = {"YOC":yoc, "CLASS":"Residential", "PATTERN":2}
+    conclusion_dict = {"YOC":yoc, "PATTERN":2}
     #2nd pass
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
     hex_dict = building_height_count(text)
     conclusion_dict |= hex_dict
+    occupancy_dict = occupancy_keyowrds(text)
+    conclusion_dict |= occupancy_dict
     return conclusion_dict
 
 def logic_pattern_0_3(text:str, match_obj: re.Match, cfref:str):
     #1st pass
     yoc = 2000 + int(cfref[-2:])
-    conclusion_dict = {"YOC":yoc, "CLASS":"Residential", "PATTERN":3}
+    conclusion_dict = {"YOC":yoc, "PATTERN":3}
     #2nd pass
     hex_dict = building_height_count(text)
     conclusion_dict |= hex_dict
+    occupancy_dict = occupancy_keyowrds(text)
+    conclusion_dict |= occupancy_dict
     return conclusion_dict
 
 def logic_pattern_0_4(text:str, match_obj: re.Match, cfref:str):
     #1st pass
     yoc = 2000 + int(cfref[-2:])
-    conclusion_dict = {"YOC":yoc, "CLASS":"Residential", "PATTERN":4}
+    conclusion_dict = {"YOC":yoc, "PATTERN":4}
     # #2nd pass
     hex_dict = building_height_count(text)
     conclusion_dict |= hex_dict
+    occupancy_dict = occupancy_keyowrds(text)
+    conclusion_dict |= occupancy_dict
     return conclusion_dict
 
 def first_pass_conclusions(match_key, match_obj, text, cfref):

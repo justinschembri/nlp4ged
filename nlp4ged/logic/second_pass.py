@@ -116,3 +116,25 @@ def building_height_count(text:str) -> dict:
             conclusion_dict = {"HEX":building_height}
             return conclusion_dict
     return {"HEX":0}
+
+def occupancy_keyowrds(text:str) -> dict:
+    """
+    Run a series of regex (hard-coded into function) to attempt to deduce the
+    occupancy type of a given permit. Returns a dict object which can be added
+    to the conclusion dict.
+    """
+    residential_keywords = ['flat', 'apartment', 'residence', 'house']
+    commercial_keyowrds = ['shop', 'office']
+    for keyword in residential_keywords:
+        occupancy_dict = {"OCCUPANCY":[]}
+        if keyword in text:
+            occupancy_dict["OCCUPANCY"].append("Residential")
+            break
+    for keyword in commercial_keyowrds:
+        if keyword in text:
+            occupancy_dict["OCCUPANCY"].append("Commercial")
+            break
+    if len(occupancy_dict["OCCUPANCY"]) == 0:
+        occupancy_dict = {"OCCUPANCY":"Unknown"}
+    return occupancy_dict
+#TODO: Add residential / commercial / industrial keywords!
