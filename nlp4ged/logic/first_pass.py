@@ -24,17 +24,8 @@ def logic_pattern_0_1(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    pattern = r'on (\w+) floors(?=.*and)(?=.*setback|.*penthouse|.*receded)'
-    match = re.search(pattern, text)
-    if match:
-        building_height = number_to_word(match.group(1))
-        conclusion_dict |= {"HEX":building_height+1}
-    # BH = (\w+) scenario:
-    pattern = r'on (\w+) floors(?!.*and)'
-    match = re.search(pattern, text)
-    if match:
-        building_height = number_to_word(match.group(1))
-        conclusion_dict |= {"HEX":building_height}
+    hex_dict = building_height_count(text)
+    conclusion_dict |= hex_dict
     return conclusion_dict
 
 def logic_pattern_0_2(text:str, match_obj: re.Match, cfref:str):
@@ -45,27 +36,8 @@ def logic_pattern_0_2(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    patterns = [
-        r'(\w+)-storey(?=.*and)(?=.*setback|.*penthouse|.*receded)', 
-        r'(\w+) storey(?=.*and)(?=.*setback|.*penthouse|.*receded)', 
-        r'over (\w+) floors(?=.*and)(?=.*setback|.*penthouse|.*receded)'
-                ]
-    for pattern in patterns:
-        match = re.search(pattern, text)
-        if match:
-            building_height = number_to_word(match.group(1))
-            conclusion_dict |= {"HEX":building_height+1}
-    # BH = (\w+) scenario
-    patterns = [
-        r'(\w+)-storey(?!.*and)(?!.*setback|.*penthouse|.*receded)', 
-        r'(\w+) storey(?!.*and)(?!.*setback|.*penthouse|.*receded)', 
-        r'over (\w+) floors(?!.*and)(?!.*setback|.*penthouse|.*receded)'
-                ]
-    for pattern in patterns:
-        match = re.search(pattern, text)
-        if match:
-            building_height = number_to_word(match.group(1))
-            conclusion_dict |= {"HEX":building_height}
+    hex_dict = building_height_count(text)
+    conclusion_dict |= hex_dict
     return conclusion_dict
 
 def logic_pattern_0_3(text:str, match_obj: re.Match, cfref:str):
@@ -75,27 +47,6 @@ def logic_pattern_0_3(text:str, match_obj: re.Match, cfref:str):
     #2nd pass
     hex_dict = building_height_count(text)
     conclusion_dict |= hex_dict
-    # patterns = [
-    #     r'(\w+)-storey(?=.*and)(?=.*setback|.*penthouse|.*receded)', 
-    #     r'(\w+) storey(?=.*and)(?=.*setback|.*penthouse|.*receded)', 
-    #     r'over (\w+) floors(?=.*and)(?=.*setback|.*penthouse|.*receded)'
-    #             ]
-    # for pattern in patterns:
-    #     match = re.search(pattern, text)
-    #     if match:
-    #         building_height = number_to_word(match.group(1))
-    #         conclusion_dict |= {"HEX":building_height+1}
-    # # BH = (\w+) scenario
-    # patterns = [
-    #     r'(\w+)-storey(?!.*and)(?!.*setback|.*penthouse|.*receded)', 
-    #     r'(\w+) storey(?!.*and)(?!.*setback|.*penthouse|.*receded)', 
-    #     r'over (\w+) floors(?!.*and)(?!.*setback|.*penthouse|.*receded)'
-    #             ]
-    # for pattern in patterns:
-    #     match = re.search(pattern, text)
-    #     if match:
-    #         building_height = number_to_word(match.group(1))
-    #         conclusion_dict |= {"HEX":building_height}
     return conclusion_dict
 
 
