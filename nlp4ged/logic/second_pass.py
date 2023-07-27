@@ -76,7 +76,7 @@ def second_pass(text:str,
     return conclusion_dict
 
 def number_to_word(word) -> int:
-    """Convert number words to integers."""
+    """Convert the number words to and return an integer equivalent."""
     text_map = {"one":1, "two":2, "three":3, "four":4, "five":5, "six":6,
         "seven":7, "eight":8, "nine":9}
     try:
@@ -85,4 +85,34 @@ def number_to_word(word) -> int:
     except:
         return 0
 
-
+def building_height_count(text:str) -> dict:
+    """
+    Run a series of regex (hard-coded into function) to attempt to count 
+    building height in a given building permit. Returns a dict object which
+    can be added to the conclusion dict.
+    """
+    # Regexes which also add a penthouse level. Pattern breaks w/o penthouse:
+    penthouse_regexes = [
+        r'(\w+)-storey(?=.*and)(?=.*setback|.*penthouse|.*receded)', 
+        r'(\w+) storey(?=.*and)(?=.*setback|.*penthouse|.*receded)', 
+        r'over (\w+) floors(?=.*and)(?=.*setback|.*penthouse|.*receded)'
+                ]
+    # Regexes which do not add a penthouse level. Pattern breaks w/ penthouse:
+    no_penthouse_regexes = [
+        r'(\w+)-storey(?!.*and)(?!.*setback|.*penthouse|.*receded)', 
+        r'(\w+) storey(?!.*and)(?!.*setback|.*penthouse|.*receded)', 
+        r'over (\w+) floors(?!.*and)(?!.*setback|.*penthouse|.*receded)'
+                ]
+    for pattern in penthouse_regexes:
+        match = re.search(pattern, text)
+        if match:
+            building_height = number_to_word(match.group(1))
+            conclusion_dict = {"HEX":building_height+1}
+            return conclusion_dict
+    for pattern in no_penthouse_regexes:
+        match = re.search(pattern, text)
+        if match:
+            building_height = number_to_word(match.group(1))
+            conclusion_dict = {"HEX":building_height}
+            return conclusion_dict
+    return {"HEX":0}

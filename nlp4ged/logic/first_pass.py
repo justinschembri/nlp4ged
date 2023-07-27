@@ -2,8 +2,7 @@ import pandas as pd
 import re
 from nlp4ged.regex.matchmaker import regex_importer, match_matricizer
 import nlp4ged.support.text_processing as preprocess
-from nlp4ged.logic.second_pass import second_pass
-from nlp4ged.logic.second_pass import number_to_word
+from nlp4ged.logic.second_pass import number_to_word, building_height_count
 
 RESIDENTIAL_KEYOWRDS = ['residential', 'apartments', 'flats']
 
@@ -74,27 +73,29 @@ def logic_pattern_0_3(text:str, match_obj: re.Match, cfref:str):
     yoc = 2000 + int(cfref[-2:])
     conclusion_dict = {"YOC":yoc, "CLASS":"Residential", "PATTERN":3}
     #2nd pass
-    patterns = [
-        r'(\w+)-storey(?=.*and)(?=.*setback|.*penthouse|.*receded)', 
-        r'(\w+) storey(?=.*and)(?=.*setback|.*penthouse|.*receded)', 
-        r'over (\w+) floors(?=.*and)(?=.*setback|.*penthouse|.*receded)'
-                ]
-    for pattern in patterns:
-        match = re.search(pattern, text)
-        if match:
-            building_height = number_to_word(match.group(1))
-            conclusion_dict |= {"HEX":building_height+1}
-    # BH = (\w+) scenario
-    patterns = [
-        r'(\w+)-storey(?!.*and)(?!.*setback|.*penthouse|.*receded)', 
-        r'(\w+) storey(?!.*and)(?!.*setback|.*penthouse|.*receded)', 
-        r'over (\w+) floors(?!.*and)(?!.*setback|.*penthouse|.*receded)'
-                ]
-    for pattern in patterns:
-        match = re.search(pattern, text)
-        if match:
-            building_height = number_to_word(match.group(1))
-            conclusion_dict |= {"HEX":building_height}
+    hex_dict = building_height_count(text)
+    conclusion_dict |= hex_dict
+    # patterns = [
+    #     r'(\w+)-storey(?=.*and)(?=.*setback|.*penthouse|.*receded)', 
+    #     r'(\w+) storey(?=.*and)(?=.*setback|.*penthouse|.*receded)', 
+    #     r'over (\w+) floors(?=.*and)(?=.*setback|.*penthouse|.*receded)'
+    #             ]
+    # for pattern in patterns:
+    #     match = re.search(pattern, text)
+    #     if match:
+    #         building_height = number_to_word(match.group(1))
+    #         conclusion_dict |= {"HEX":building_height+1}
+    # # BH = (\w+) scenario
+    # patterns = [
+    #     r'(\w+)-storey(?!.*and)(?!.*setback|.*penthouse|.*receded)', 
+    #     r'(\w+) storey(?!.*and)(?!.*setback|.*penthouse|.*receded)', 
+    #     r'over (\w+) floors(?!.*and)(?!.*setback|.*penthouse|.*receded)'
+    #             ]
+    # for pattern in patterns:
+    #     match = re.search(pattern, text)
+    #     if match:
+    #         building_height = number_to_word(match.group(1))
+    #         conclusion_dict |= {"HEX":building_height}
     return conclusion_dict
 
 
