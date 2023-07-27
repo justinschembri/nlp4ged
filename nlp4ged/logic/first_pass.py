@@ -66,11 +66,33 @@ def logic_pattern_0_4(text:str, match_obj: re.Match, cfref:str):
     conclusion_dict |= occupancy_dict
     return conclusion_dict
 
-def logic_pattern_0_5(text:str, match_obj: re.Match, cfref:str):
+def logic_pattern_1_1(text:str, match_obj: re.Match, cfref:str):
     #1st pass
     yoc = 2000 + int(cfref[-2:])
     conclusion_dict = {"YOC":yoc, "PATTERN":5}
     # # #2nd pass
+    hex_dict = building_height_count(text)
+    conclusion_dict |= hex_dict
+    occupancy_dict = occupancy_keyowrds(text)
+    conclusion_dict |= occupancy_dict
+    return conclusion_dict
+
+def logic_pattern_1_2(text:str, match_obj: re.Match, cfref:str):
+    #1st pass
+    yoc = 2000 + int(cfref[-2:])
+    conclusion_dict = {"YOC":yoc, "PATTERN":6}
+    #2nd pass
+    hex_dict = building_height_count(text)
+    conclusion_dict |= hex_dict
+    occupancy_dict = occupancy_keyowrds(text)
+    conclusion_dict |= occupancy_dict
+    return conclusion_dict
+
+def logic_pattern_1_4(text:str, match_obj: re.Match, cfref:str):
+    #1st pass
+    yoc = 2000 + int(cfref[-2:])
+    conclusion_dict = {"YOC":yoc, "PATTERN":7}
+    #2nd pass
     hex_dict = building_height_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
@@ -82,7 +104,9 @@ def first_pass_conclusions(match_key, match_obj, text, cfref):
                  1: logic_pattern_0_2(text, match_obj, cfref),
                  2: logic_pattern_0_3(text, match_obj, cfref),
                  3: logic_pattern_0_4(text, match_obj, cfref),
-                 4: logic_pattern_0_5(text, match_obj, cfref),
+                 4: logic_pattern_1_1(text, match_obj, cfref),
+                 5: logic_pattern_1_2(text, match_obj, cfref),
+                 6: logic_pattern_1_4(text, match_obj, cfref),
                  }
     return logic_map[match_key]
 

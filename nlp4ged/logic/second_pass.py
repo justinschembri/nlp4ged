@@ -93,15 +93,16 @@ def building_height_count(text:str) -> dict:
     """
     # Regexes which also add a penthouse level. Pattern breaks w/o penthouse:
     penthouse_regexes = [
-        r'(\w+)-storey(?=.*and)(?=.*setback|.*penthouse|.*receded)', 
-        r'(\w+) storey(?=.*and)(?=.*setback|.*penthouse|.*receded)', 
+        r'(?<!existing )\b(\w+)-storey(?=.*and)(?=.*setback|.*penthouse|.*receded)', 
+        r'(?<!existing )\b(\w+) storey(?=.*and)(?=.*setback|.*penthouse|.*receded)', 
         r'over (\w+) floors(?=.*and)(?=.*setback|.*penthouse|.*receded)'
                 ]
     # Regexes which do not add a penthouse level. Pattern breaks w/ penthouse:
     no_penthouse_regexes = [
-        r'(\w+)-storey(?!.*and)(?!.*setback|.*penthouse|.*receded)', 
-        r'(\w+) storey(?!.*and)(?!.*setback|.*penthouse|.*receded)', 
-        r'over (\w+) floors(?!.*and)(?!.*setback|.*penthouse|.*receded)'
+        r'(?<!existing )\b(\w+)-storey(?!.*and)(?!.*setback|.*penthouse|.*receded)', 
+        r'(?<!existing )(\w+) storey(?!.*and)(?!.*setback|.*penthouse|.*receded)', 
+        r'over (\w+) floors(?!.*and)(?!.*setback|.*penthouse|.*receded)',
+        r'at (\w+) floor$'
                 ]
     for pattern in penthouse_regexes:
         match = re.search(pattern, text)
