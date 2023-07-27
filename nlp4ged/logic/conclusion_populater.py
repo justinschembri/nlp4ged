@@ -4,7 +4,7 @@ def populate_conclusions(match_matrix):
     conclusion_matrix = match_matrix.copy()
     # The GED attribute is appended to the match matrix.
     attribute_list = ['CFREF', 'text', 'CLUSTER', 'MATCHES', 'HEX', 'HEX+',
-                      'BASEMENTS', 'YOC', 'CLASS', 'PATTERN']
+                      'BASEMENTS', 'YOC', 'CLASS', 'PATTERN', 'OCCUPANCY']
     conclusion_matrix = conclusion_matrix.reindex(columns=attribute_list)
     conclusion_matrix['HEX'] = 0
     conclusion_matrix['HEX+'] = 0 
