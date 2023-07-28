@@ -12,6 +12,8 @@ def populate_conclusions(match_matrix):
     conclusion_matrix['YOR'] = 0
     conclusion_matrix['PATTERN'] = 0
     conclusion_matrix['OCCUPANCY'] = "Unknown"
+    # The 'MATCHES' column in the conclusion_matrix contains a list of all regex
+    # matches made.
     for idx, match_list in conclusion_matrix['MATCHES'].items():
         if match_list == []:
             continue

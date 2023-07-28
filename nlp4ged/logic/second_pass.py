@@ -107,14 +107,22 @@ def building_height_count(text:str) -> dict:
     for pattern in penthouse_regexes:
         match = re.search(pattern, text)
         if match:
-            building_height = number_to_word(match.group(1))
-            conclusion_dict = {"HEX":building_height+1}
+            try: 
+                int_hex = int(match.group(1))
+                conclusion_dict = {"HEX":int_hex+1}
+            except:
+                building_height = number_to_word(match.group(1))
+                conclusion_dict = {"HEX":building_height+1}
             return conclusion_dict
     for pattern in no_penthouse_regexes:
         match = re.search(pattern, text)
         if match:
-            building_height = number_to_word(match.group(1))
-            conclusion_dict = {"HEX":building_height}
+            try: 
+                int_hex = int(match.group(1))
+                conclusion_dict = {"HEX":int_hex}
+            except:
+                building_height = number_to_word(match.group(1))
+                conclusion_dict = {"HEX":building_height}
             return conclusion_dict
     return {"HEX":0}
 

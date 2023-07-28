@@ -37,3 +37,7 @@ construct\w+(\s\w+){0,2}\s(extension|additional floor)
 extension(\s\w+){0,1}\s(\w+ floor|\w+ level)$
 exten\w+(\s\w+){0,1}\s(existing\s(dwelling|maisonette|building|development|townhouse|house of character))
 additional\s(floor)(?=.*flat|.*dwelling|\.|$)
+extension(\s\w+){0,2}\s(floor)
+proposed\s(\w+ floor)(?=.*over existing)
+construct(\s\w+){0,1}\s(additional floor|extension)
+construct\w+(\s\w+)\s(another residential unit|a residential unit|apartment|additional floor|an additional residential unit)(?=.*at|.*on|\.|$)

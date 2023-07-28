@@ -422,10 +422,46 @@ def logic_pattern_7_3(text:str, match_obj: re.Match, cfref:str):
     conclusion_dict |= occupancy_dict
     return conclusion_dict
 
-def logic_pattern_7_4(text:str, match_obj: re.Match, cfref:str):
+def logic_pattern_8_1(text:str, match_obj: re.Match, cfref:str):
     #1st pass
     yor = 2000 + int(cfref[-2:])
     conclusion_dict = {"YOR":yor, "PATTERN":39}
+    #2nd pass
+    occupancy_dict = occupancy_keyowrds(text)
+    conclusion_dict |= occupancy_dict
+    return conclusion_dict
+
+def logic_pattern_8_2(text:str, match_obj: re.Match, cfref:str):
+    #1st pass
+    yor = 2000 + int(cfref[-2:])
+    conclusion_dict = {"YOR":yor, "PATTERN":40}
+    #2nd pass
+    occupancy_dict = occupancy_keyowrds(text)
+    conclusion_dict |= occupancy_dict
+    return conclusion_dict
+
+def logic_pattern_8_3(text:str, match_obj: re.Match, cfref:str):
+    #1st pass
+    yor = 2000 + int(cfref[-2:])
+    conclusion_dict = {"YOR":yor, "PATTERN":41}
+    #2nd pass
+    occupancy_dict = occupancy_keyowrds(text)
+    conclusion_dict |= occupancy_dict
+    return conclusion_dict
+
+def logic_pattern_8_4(text:str, match_obj: re.Match, cfref:str):
+    #1st pass
+    yor = 2000 + int(cfref[-2:])
+    conclusion_dict = {"YOR":yor, "PATTERN":42}
+    #2nd pass
+    occupancy_dict = occupancy_keyowrds(text)
+    conclusion_dict |= occupancy_dict
+    return conclusion_dict
+
+def logic_pattern_8_5(text:str, match_obj: re.Match, cfref:str):
+    #1st pass
+    yor = 2000 + int(cfref[-2:])
+    conclusion_dict = {"YOR":yor, "PATTERN":43}
     #2nd pass
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -470,7 +506,11 @@ def first_pass_conclusions(match_key, match_obj, text, cfref):
                  35: logic_pattern_7_1(text, match_obj, cfref),
                  36: logic_pattern_7_2(text, match_obj, cfref),
                  37: logic_pattern_7_3(text, match_obj, cfref),
-                 38: logic_pattern_7_4(text, match_obj, cfref),
+                 38: logic_pattern_8_1(text, match_obj, cfref),
+                 39: logic_pattern_8_2(text, match_obj, cfref),
+                 40: logic_pattern_8_3(text, match_obj, cfref),
+                 41: logic_pattern_8_4(text, match_obj, cfref),
+                 42: logic_pattern_8_5(text, match_obj, cfref),
                  }
     return logic_map[match_key]
 
