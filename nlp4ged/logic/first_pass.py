@@ -636,13 +636,91 @@ def logic_pattern_13_2(text:str, match_obj: re.Match, cfref:str):
 def logic_pattern_13_3(text:str, match_obj: re.Match, cfref:str):
     #1st pass
     yoc = 2000 + int(cfref[-2:])
-    conclusion_dict = {"YOC":yoc, "PATTERN":57}
+    conclusion_dict = {"YOC":yoc, "PATTERN":58}
     #2nd pass
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
     hex_dict = building_height_count(text)
     conclusion_dict |= hex_dict
+    occupancy_dict = occupancy_keyowrds(text)
+    conclusion_dict |= occupancy_dict
+    return conclusion_dict
+
+def logic_pattern_14_1(text:str, match_obj: re.Match, cfref:str):
+    #1st pass
+    yoc = 2000 + int(cfref[-2:])
+    conclusion_dict = {"YOC":yoc, "PATTERN":59}
+    #2nd pass
+    if "basement" in text:
+        conclusion_dict |= {"BASEMENTS":True}
+    # BH = (\w+) plus penthouse scenario
+    hex_dict = building_height_count(text)
+    conclusion_dict |= hex_dict
+    occupancy_dict = occupancy_keyowrds(text)
+    conclusion_dict |= occupancy_dict
+    return conclusion_dict
+
+def logic_pattern_15_1(text:str, match_obj: re.Match, cfref:str):
+    #1st pass
+    yoc = 2000 + int(cfref[-2:])
+    conclusion_dict = {"YOC":yoc, "PATTERN":60}
+    #2nd pass
+    if "basement" in text:
+        conclusion_dict |= {"BASEMENTS":True}
+    # BH = (\w+) plus penthouse scenario
+    hex_dict = building_height_count(text)
+    conclusion_dict |= hex_dict
+    occupancy_dict = occupancy_keyowrds(text)
+    conclusion_dict |= occupancy_dict
+    return conclusion_dict
+
+def logic_pattern_15_2(text:str, match_obj: re.Match, cfref:str):
+    #1st pass
+    yoc = 2000 + int(cfref[-2:])
+    conclusion_dict = {"YOC":yoc, "PATTERN":61}
+    #2nd pass
+    if "basement" in text:
+        conclusion_dict |= {"BASEMENTS":True}
+    # BH = (\w+) plus penthouse scenario
+    hex_dict = building_height_count(text)
+    conclusion_dict |= hex_dict
+    occupancy_dict = occupancy_keyowrds(text)
+    conclusion_dict |= occupancy_dict
+    return conclusion_dict
+
+def logic_pattern_15_3(text:str, match_obj: re.Match, cfref:str):
+    #1st pass
+    yor = 2000 + int(cfref[-2:])
+    conclusion_dict = {"YOR":yor, "PATTERN":62}
+    #2nd pass
+    occupancy_dict = occupancy_keyowrds(text)
+    conclusion_dict |= occupancy_dict
+    return conclusion_dict
+
+def logic_pattern_15_4(text:str, match_obj: re.Match, cfref:str):
+    #1st pass
+    yor = 2000 + int(cfref[-2:])
+    conclusion_dict = {"YOR":yor, "PATTERN":63}
+    #2nd pass
+    occupancy_dict = occupancy_keyowrds(text)
+    conclusion_dict |= occupancy_dict
+    return conclusion_dict
+
+def logic_pattern_15_5(text:str, match_obj: re.Match, cfref:str):
+    #1st pass
+    yor = 2000 + int(cfref[-2:])
+    conclusion_dict = {"YOR":yor, "PATTERN":64}
+    #2nd pass
+    occupancy_dict = occupancy_keyowrds(text)
+    conclusion_dict |= occupancy_dict
+    return conclusion_dict
+
+def logic_pattern_15_6(text:str, match_obj: re.Match, cfref:str):
+    #1st pass
+    yor = 2000 + int(cfref[-2:])
+    conclusion_dict = {"YOR":yor, "PATTERN":65}
+    #2nd pass
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
     return conclusion_dict
@@ -706,6 +784,13 @@ def first_pass_conclusions(match_key, match_obj, text, cfref):
                  55: logic_pattern_13_1(text, match_obj, cfref),
                  56: logic_pattern_13_2(text, match_obj, cfref),
                  57: logic_pattern_13_3(text, match_obj, cfref),
+                 58: logic_pattern_14_1(text, match_obj, cfref),
+                 59: logic_pattern_15_1(text, match_obj, cfref),
+                 60: logic_pattern_15_2(text, match_obj, cfref),
+                 61: logic_pattern_15_3(text, match_obj, cfref),
+                 62: logic_pattern_15_4(text, match_obj, cfref),
+                 63: logic_pattern_15_5(text, match_obj, cfref),
+                 64: logic_pattern_15_5(text, match_obj, cfref),
                  }
     return logic_map[match_key]
 
