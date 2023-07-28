@@ -146,11 +146,17 @@ def single_ordinal_capture_count(text:str) -> dict:
     """
     # Regexes which also add a penthouse level. Pattern breaks w/o penthouse:
     penthouse_regexes = [
-        r'(?:demo\w+)(?:.*const\w+)(?:.*at)(?:.*)\s(\w+)(?:\sfloor)(?=.*setback|.*penthouse|.*receded)'
+        r'(?:demo\w+).*(?:const\w+)(?:.*at).*(ground|first|second|third|fourth|fifth|sixth|seventh|eight|ninth|1st|2nd|3rd|4th|5th|6th|7th|8th|9th)(?=.*setback|.*penthouse|.*receded)'
+        r'(?:.*extension at).*(ground|first|second|third|fourth|fifth|sixth|seventh|eight|ninth|1st|2nd|3rd|4th|5th|6th|7th|8th|9th)(?=.*setback|.*penthouse|.*receded)',
+        r'(?:const\w+.*)from\s(?:\w+)\still\s(\w+)\sfloor(?=.*setback|.*penthouse|.*receded)'
                 ]
     # Regexes which do not add a penthouse level. Pattern breaks w/ penthouse:
     no_penthouse_regexes = [
-        r'(?:demo\w+)(?:.*const\w+)(?:.*at)(?:.*)\s(\w+)(?:\sfloor)(?!.*setback|.*penthouse|.*receded)',
+        r'(?:demo\w+).*(?:const\w+)(?:.*at).*(ground|first|second|third|fourth|fifth|sixth|seventh|eight|ninth|1st|2nd|3rd|4th|5th|6th|7th|8th|9th)(?!.*setback|.*penthouse|.*receded)',
+        r'(?:.*extension at).*(ground|first|second|third|fourth|fifth|sixth|seventh|eight|ninth|1st|2nd|3rd|4th|5th|6th|7th|8th|9th)(?!.*setback|.*penthouse|.*receded)',
+        r'(?:constru\w+|extension)\sof\s(\w+)\sfloor$',
+        r'(?:.*erect)\s(ground|first|second|third|fourth|fifth|sixth|seventh|eight|ninth|1st|2nd|3rd|4th|5th|6th|7th|8th|9th)\s(?:floor|level)(?!.*and)',
+        r'(?:const\w+.*)from\s(?:\w+)\still\s(\w+)\sfloor(?!.*setback|.*penthouse|.*receded)'
                 ]
     for pattern in penthouse_regexes:
         match = re.search(pattern, text)

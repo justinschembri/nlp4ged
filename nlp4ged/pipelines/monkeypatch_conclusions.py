@@ -1,7 +1,6 @@
 from config import DATA_PATH, MODEL_PATH
 from joblib import load
 from nlp4ged.regex.matchmaker import regex_importer, match_matricizer
-from nlp4ged.support.text_processing import lower_case, remove_punctuation
 from nlp4ged.logic.conclusion_populater import populate_conclusions
 from nlp4ged.pipelines.classification import Classifier
 import pandas as pd
@@ -16,4 +15,3 @@ a = len(conclusion_matrix)
 b = len(conclusion_matrix[conclusion_matrix["PATTERN"] > 0])
 print(b/a)
 len(conclusion_matrix[conclusion_matrix["HEX"] > 0])
-
