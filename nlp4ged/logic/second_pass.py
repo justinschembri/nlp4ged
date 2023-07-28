@@ -75,7 +75,7 @@ def second_pass(text:str,
     
     return conclusion_dict
 
-def number_to_word(word) -> int:
+def cardinal_wordnum_to_int(word) -> int:
     """Convert the number words to and return an integer equivalent."""
     text_map = {"one":1, "two":2, "three":3, "four":4, "five":5, "six":6,
         "seven":7, "eight":8, "nine":9}
@@ -84,12 +84,24 @@ def number_to_word(word) -> int:
         return word_as_int
     except:
         return 0
+    
+def ordinal_to_int(word) -> int:
+    """Convert the number words to and return an integer equivalent."""
+    text_map = {"1st":2, "2nd":3, "3rd":4, "4th":5, "5th":6, "6th":7,
+        "7th":8, "8th":9, "9th":10, "first":2, "second":3, "third":4, "fourth":5,
+        "fifth":6, "sixth":7, "seventh":8, "eight":9, "ninth":10}
+    try:
+        word_as_int = text_map[word]
+        return word_as_int
+    except:
+        return 0
 
-def building_height_count(text:str) -> dict:
+def single_cardinal_capture_count(text:str) -> dict:
     """
     Run a series of regex (hard-coded into function) to attempt to count 
-    building height in a given building permit. Returns a dict object which
-    can be added to the conclusion dict.
+    building height in a given building permit. Regexes all designed to make capture
+    of cardinal numbers. Returns a dict object which can be added to the 
+    conclusion dict.
     """
     # Regexes which also add a penthouse level. Pattern breaks w/o penthouse:
     penthouse_regexes = [
@@ -111,7 +123,7 @@ def building_height_count(text:str) -> dict:
                 int_hex = int(match.group(1))
                 conclusion_dict = {"HEX":int_hex+1}
             except:
-                building_height = number_to_word(match.group(1))
+                building_height = cardinal_wordnum_to_int(match.group(1))
                 conclusion_dict = {"HEX":building_height+1}
             return conclusion_dict
     for pattern in no_penthouse_regexes:
@@ -121,7 +133,43 @@ def building_height_count(text:str) -> dict:
                 int_hex = int(match.group(1))
                 conclusion_dict = {"HEX":int_hex}
             except:
-                building_height = number_to_word(match.group(1))
+                building_height = cardinal_wordnum_to_int(match.group(1))
+                conclusion_dict = {"HEX":building_height}
+            return conclusion_dict
+    return {"HEX":0}
+
+def single_ordinal_capture_count(text:str) -> dict:
+    """
+    Run a series of regex (hard-coded into function) to attempt to count 
+    building height in a given building permit. Returns a dict object which
+    can be added to the conclusion dict.
+    """
+    # Regexes which also add a penthouse level. Pattern breaks w/o penthouse:
+    penthouse_regexes = [
+        r'(?:demo\w+)(?:.*const\w+)(?:.*at)(?:.*)\s(\w+)(?:\sfloor)(?=.*setback|.*penthouse|.*receded)'
+                ]
+    # Regexes which do not add a penthouse level. Pattern breaks w/ penthouse:
+    no_penthouse_regexes = [
+        r'(?:demo\w+)(?:.*const\w+)(?:.*at)(?:.*)\s(\w+)(?:\sfloor)(?!.*setback|.*penthouse|.*receded)',
+                ]
+    for pattern in penthouse_regexes:
+        match = re.search(pattern, text)
+        if match:
+            try: 
+                int_hex = int(match.group(1))
+                conclusion_dict = {"HEX":int_hex+1}
+            except:
+                building_height = ordinal_to_int(match.group(1))
+                conclusion_dict = {"HEX":building_height+1}
+            return conclusion_dict
+    for pattern in no_penthouse_regexes:
+        match = re.search(pattern, text)
+        if match:
+            try: 
+                int_hex = int(match.group(1))
+                conclusion_dict = {"HEX":int_hex}
+            except:
+                building_height = ordinal_to_int(match.group(1))
                 conclusion_dict = {"HEX":building_height}
             return conclusion_dict
     return {"HEX":0}

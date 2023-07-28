@@ -16,3 +16,4 @@ a = len(conclusion_matrix)
 b = len(conclusion_matrix[conclusion_matrix["PATTERN"] > 0])
 print(b/a)
 len(conclusion_matrix[conclusion_matrix["HEX"] > 0])
+

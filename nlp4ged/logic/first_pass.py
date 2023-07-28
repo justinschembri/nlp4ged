@@ -2,7 +2,7 @@ import pandas as pd
 import re
 from nlp4ged.regex.matchmaker import regex_importer, match_matricizer
 import nlp4ged.support.text_processing as preprocess
-from nlp4ged.logic.second_pass import number_to_word, building_height_count, occupancy_keyowrds
+from nlp4ged.logic.second_pass import cardinal_wordnum_to_int, single_cardinal_capture_count, occupancy_keyowrds, single_ordinal_capture_count
 
 RESIDENTIAL_KEYOWRDS = ['residential', 'apartments', 'flats']
 
@@ -24,7 +24,9 @@ def logic_pattern_0_1(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -38,7 +40,9 @@ def logic_pattern_0_2(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -49,7 +53,9 @@ def logic_pattern_0_3(text:str, match_obj: re.Match, cfref:str):
     yoc = 2000 + int(cfref[-2:])
     conclusion_dict = {"YOC":yoc, "PATTERN":3}
     #2nd pass
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -60,7 +66,9 @@ def logic_pattern_0_4(text:str, match_obj: re.Match, cfref:str):
     yoc = 2000 + int(cfref[-2:])
     conclusion_dict = {"YOC":yoc, "PATTERN":4}
     # #2nd pass
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -71,7 +79,9 @@ def logic_pattern_1_1(text:str, match_obj: re.Match, cfref:str):
     yoc = 2000 + int(cfref[-2:])
     conclusion_dict = {"YOC":yoc, "PATTERN":5}
     # # #2nd pass
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -82,7 +92,9 @@ def logic_pattern_1_2(text:str, match_obj: re.Match, cfref:str):
     yoc = 2000 + int(cfref[-2:])
     conclusion_dict = {"YOC":yoc, "PATTERN":6}
     #2nd pass
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -93,7 +105,9 @@ def logic_pattern_1_4(text:str, match_obj: re.Match, cfref:str):
     yoc = 2000 + int(cfref[-2:])
     conclusion_dict = {"YOC":yoc, "PATTERN":7}
     #2nd pass
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -113,7 +127,9 @@ def logic_pattern_1_7(text:str, match_obj: re.Match, cfref:str):
     yoc = 2000 + int(cfref[-2:])
     conclusion_dict = {"YOC":yoc, "PATTERN":9}
     #2nd pass
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -124,7 +140,9 @@ def logic_pattern_1_9(text:str, match_obj: re.Match, cfref:str):
     yoc = 2000 + int(cfref[-2:])
     conclusion_dict = {"YOC":yoc, "PATTERN":10}
     #2nd pass
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -219,7 +237,9 @@ def logic_pattern_3_1(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -233,7 +253,9 @@ def logic_pattern_3_2(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -319,7 +341,9 @@ def logic_pattern_6_1(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -333,7 +357,9 @@ def logic_pattern_6_2(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -347,7 +373,9 @@ def logic_pattern_6_3(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -361,7 +389,9 @@ def logic_pattern_6_4(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -375,7 +405,9 @@ def logic_pattern_6_5(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -389,7 +421,9 @@ def logic_pattern_6_6(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -475,7 +509,9 @@ def logic_pattern_9_1(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -489,7 +525,9 @@ def logic_pattern_9_2(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -503,7 +541,9 @@ def logic_pattern_9_3(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -517,7 +557,9 @@ def logic_pattern_9_4(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -531,7 +573,9 @@ def logic_pattern_9_5(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -599,7 +643,9 @@ def logic_pattern_12_7(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -613,7 +659,9 @@ def logic_pattern_13_1(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -627,7 +675,9 @@ def logic_pattern_13_2(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -641,7 +691,9 @@ def logic_pattern_13_3(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -655,7 +707,9 @@ def logic_pattern_14_1(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -669,7 +723,9 @@ def logic_pattern_15_1(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -683,7 +739,9 @@ def logic_pattern_15_2(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -733,7 +791,9 @@ def logic_pattern_16_2(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -747,7 +807,9 @@ def logic_pattern_16_3(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -797,7 +859,9 @@ def logic_pattern_17_1(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -811,7 +875,9 @@ def logic_pattern_17_2(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
@@ -825,7 +891,9 @@ def logic_pattern_17_3(text:str, match_obj: re.Match, cfref:str):
     if "basement" in text:
         conclusion_dict |= {"BASEMENTS":True}
     # BH = (\w+) plus penthouse scenario
-    hex_dict = building_height_count(text)
+    hex_dict = single_cardinal_capture_count(text)
+    if hex_dict["HEX"] == 0:
+        hex_dict = single_ordinal_capture_count(text)
     conclusion_dict |= hex_dict
     occupancy_dict = occupancy_keyowrds(text)
     conclusion_dict |= occupancy_dict
