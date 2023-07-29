@@ -31,4 +31,6 @@ def match_matricizer(data, regexes):
             match = regex_match(text, pattern)
             if match != None:
                 data.at[idx,'MATCHES'].append({ref:match})
+                data.at[idx,'text2'] = data.at[idx,'text']
+                data.at[idx,'text'] = 'processed'
     return data

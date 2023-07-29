@@ -4,7 +4,7 @@ def populate_conclusions(match_matrix):
     conclusion_matrix = match_matrix.copy()
     # The GED attribute is appended to the match matrix.
     attribute_list = ['CFREF', 'text', 'CLUSTER', 'MATCHES', 'HEX', 'HEX+',
-                      'BASEMENTS', 'YOC', 'YOR', 'PATTERN', 'OCCUPANCY']
+                      'BASEMENTS', 'YOC', 'YOR', 'PATTERN', 'OCCUPANCY', 'text2']
     conclusion_matrix = conclusion_matrix.reindex(columns=attribute_list)
     conclusion_matrix['HEX'] = 0
     conclusion_matrix['HEX+'] = 0 
@@ -19,7 +19,7 @@ def populate_conclusions(match_matrix):
             continue
         for match in match_list:
             for match_key, match_obj in match.items():
-                text = conclusion_matrix.at[idx,"text"]
+                text = conclusion_matrix.at[idx,"text2"]
                 cfref = conclusion_matrix.at[idx, "CFREF"]
                 conclusion_dict = first_pass_conclusions(match_key, match_obj, text, cfref)
                 for key in conclusion_dict:
